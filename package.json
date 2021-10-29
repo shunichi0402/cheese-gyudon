@@ -1,0 +1,23 @@
+{
+  "name": "cheese-gyudon",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shunichi0402/cheese-gyudon.git"
+  },
+  "author": "shunichi0402",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/shunichi0402/cheese-gyudon/issues"
+  },
+  "homepage": "https://github.com/shunichi0402/cheese-gyudon#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
