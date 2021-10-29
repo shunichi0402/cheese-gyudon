@@ -21,3 +21,4 @@ $ npm i
 ```
 npm run dev
 ```
+ブラウザで http://localhost:3000 にアクセスすれば表示される。
