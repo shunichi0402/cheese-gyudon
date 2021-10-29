@@ -13,8 +13,8 @@ https://gitforwindows.org/
 コマンドプロンプトを開き作業ディレクトリに移動して、以下のコードを打つ
 ```
 $ git clone https://github.com/shunichi0402/cheese-gyudon.git
-$cd cheese-gyudon
-$npm i
+$ cd cheese-gyudon
+$ npm i
 ```
 
 つぎに以下のコードでサーバーが立ち上がる。
