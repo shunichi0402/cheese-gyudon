@@ -1,5 +1,5 @@
 
-# cheese-gyud
+# cheese-gyudon
 ## 電子出席簿
 ## サーバーの建て方
 
