@@ -19,3 +19,5 @@ const consola = {
         }
     }
 }
+
+module.exports = consola;
