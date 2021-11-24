@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cheese gyudon</title>
+    <link rel="stylesheet" href="./style.css">
+
+</head>
+
+<body>
+    <div class="main-content">
+        <h1>Database Debug Page</h1>
+
+        <h2>List</h2>
+        
+        <h3>Class</h3>
+
+        <h3>Students</h3>
+
+        <h2>Add</h2>
+
+        <h3>Class</h3>
+        <div>
+            name:<input type="text" id="class-name">
+        </div>
+        <button id="add-class-button">submit</button>
+
+        
+        <h3>Students</h3>
+        <div>
+            name:<input type="text">
+            number:<input type="number" value="1" min="1" max="1000">
+            class:<select name="input-student-class" id="input-student-class"></select>
+        </div>
+        <button>submit</button>
+
+    </div>
+    
+    
+    <script src="https://www.gstatic.com/firebasejs/8.7.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.7.0/firebase-database.js"></script>
+    <script>
+        // Your web app's Firebase configuration
+        var firebaseConfig = {
+            apiKey: "AIzaSyDIo54y1gk4Mx0F7pVFPUuNgl5yObrxhxg",
+            authDomain: "cheese-ushi.firebaseapp.com",
+            databaseURL: "https://cheese-ushi-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "cheese-ushi",
+            storageBucket: "cheese-ushi.appspot.com",
+            messagingSenderId: "529789470857",
+            appId: "1:529789470857:web:a229452cc1997ef9d8de58"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+    </script>
+    
+    <script src="./main.js"></script>
+</body>
+
+</html>
