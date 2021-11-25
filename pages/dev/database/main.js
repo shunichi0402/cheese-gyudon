@@ -1,7 +1,12 @@
 const database = firebase.database();
 
-function paseDate(date){
-    
+function paseDate(date, format){
+
+    format = format.replace(/YYYY/, date.getFullYear());
+    format = '0' + format.replace(/MM/, date.getMonth() + 1);
+    format = '0' + format.replace(/DD/, date.getDate());
+
+    return format;
 }
 
 async function addAttend(studentID, date, time, status, remarks = ''){
