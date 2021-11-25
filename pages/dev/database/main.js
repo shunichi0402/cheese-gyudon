@@ -1,5 +1,37 @@
 const database = firebase.database();
 
+function paseDate(date){
+    
+}
+
+async function addAttend(studentID, date, time, status, remarks = ''){
+    if (!studentID || !date || !time || !status) {
+        return
+    }
+
+    const studentData = await database.ref(`studnet/${studentID}`).get();
+    const parseStudnetData = await studentData.val();
+
+    if (parseStudnetData == null){
+        console.log('err : studentIDが不正な値です。');
+        return
+    }
+
+    const attendData = await database.ref(`attend/${studentID}/${date}/${time}`).get();
+    parseAttendData = await attendData.val();
+
+    if (parseAttendData != null){
+        console.log('err : 既にデータが存在しています');
+        return
+    }
+
+    database.ref(`attend/${studentID}/${date}/${time}`).set({
+        status,
+        remarks
+    });
+
+}
+
 async function addStudent(name, number, studentClass){
     if(!name || !number || !studentClass){
         return
@@ -59,8 +91,10 @@ function relocadClass(){
         parsedData = data.val();
     
         let innerHTML = '';
-        for (const [key, value] of Object.entries(parsedData)) {
-            innerHTML += `<option value="${key}">${value.name}</option>`;
+        if (parsedData){
+            for (const [key, value] of Object.entries(parsedData)) {
+                innerHTML += `<option value="${key}">${value.name}</option>`;
+            }
         }
         document.getElementById('student-class').innerHTML = innerHTML;
     });
