@@ -39,12 +39,32 @@
 
         <h3>Attend</h3>
         <div>
+            class:<select name="attend-class" id="attend-class"></select>
             student:<select name="attend-student" id="attent-student"></select>
             date:<input type="date" name="sttend-date" id="attend-date">
             time: <select name="attend-time" id="attend-time">
-                <option value=""></option>
+                <option value="0">HL</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
             </select>
+            <br>
+            status: <select name="attend-status" id="attend-status">
+                <option value="0">出席</option>
+                <option value="1">欠席</option>
+                <option value="2">忌引き</option>
+                <option value="3">早退</option>
+                <option value="4">遅刻</option>
+                <option value="5">公欠</option>
+            </select>
+            remarks: <input type="text" id="attend-remarks">
         </div>
+        <button id="add-attend-button">submit</button>
 
     </div>
     

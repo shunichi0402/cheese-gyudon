@@ -3,8 +3,8 @@ const database = firebase.database();
 function paseDate(date, format){
 
     format = format.replace(/YYYY/, date.getFullYear());
-    format = '0' + format.replace(/MM/, date.getMonth() + 1);
-    format = '0' + format.replace(/DD/, date.getDate());
+    format = format.replace(/MM/, ('0' + (date.getMonth() + 1)).slice(-2));
+    format = format.replace(/DD/, ('0' + date.getDate()).slice(-2) );
 
     return format;
 }
@@ -59,7 +59,11 @@ async function addStudent(name, number, studentClass){
         }
     );
 
+    const resultClass = await database.ref(`class/${studentClass}/student/${result.key}`).set(true);
+
     console.log(`success : ${result}に追加されました。`);
+
+    return;
 }
 
 function addClass(name){
@@ -102,7 +106,51 @@ function relocadClass(){
             }
         }
         document.getElementById('student-class').innerHTML = innerHTML;
+        document.getElementById('attend-class').innerHTML = innerHTML;
     });
+}
+
+async function relocadStudent(studnetClass){
+    let innerHTML = '';
+
+    const classData = await database.ref(`class/${studnetClass}/student`).get();
+    const parseClassData = await classData.val();
+
+    console.log(parseClassData);
+    if(parseClassData){
+        for (const [key, value] of Object.entries(parseClassData)) {
+
+            console.log(key);
+            const studentData = await database.ref(`student/${key}`).get();
+            const parseStudentData = await studentData.val();
+
+            if(parseStudentData){
+                innerHTML += `<option value="${key}">${parseStudentData.number}:${parseStudentData.name}</option>`;
+            }
+        }
+    } else {
+
+    }
+
+    document.getElementById('attent-student').innerHTML = innerHTML;
+
+
+    // database.ref(`class/${studnetClass}`).get().then(data => {
+    //     parsedData = data.val();
+    
+    //     let innerHTML = '';
+    //     if (parsedData){
+    //         for (const [key, value] of Object.entries(parsedData)) {
+
+    //             database.ref(`studnet/${key}`).get().then(studnetData => {
+    //                 innerHTML += `<option value="${key}">${studnetData.val().name}</option>`;
+    //             })
+    //         }
+    //     }
+
+    // });
+
+
 }
 
 document.getElementById('add-class-button').addEventListener('click', () => {
@@ -110,17 +158,39 @@ document.getElementById('add-class-button').addEventListener('click', () => {
     document.getElementById('class-name').value = '';
 });
 
-document.getElementById('add-student-button').addEventListener('click', () => {
+const attendClassElenet = document.getElementById('attend-class');
+
+document.getElementById('add-student-button').addEventListener('click', async () => {
     const name = document.getElementById('student-name');
     const number = document.getElementById('student-number');
     const studentClass = document.getElementById('student-class');
     console.log(name);
     console.log(number);
     console.log(studentClass);
-    addStudent(name.value, number.value, studentClass.value);
+    await addStudent(name.value, number.value, studentClass.value);
+    relocadStudent(attendClassElenet.value);
     name.value = ''; number.value = '';
 });
 
+document.getElementById('add-attend-button').addEventListener('click', () => {
+    const studentClass = document.getElementById('attend-class');
+    const student = document.getElementById('attend-student');
+    const date = document.getElementById('attend-date');
+    const time = document.getElementById('attend-time');
+    const status = document.getElementById('attend-status');
+    const remarks = document.getElementById('attend-remarks');
+    addAttend(student.value, date.value, time.value, status.value, remarks.value);
+});
+
+
+attendClassElenet.addEventListener('change', () => {
+    relocadStudent(attendClassElenet.value);
+})
+
 
 relocadClass();
+
+setTimeout(() => {
+    relocadStudent(attendClassElenet.value);
+}, 1500);
 
