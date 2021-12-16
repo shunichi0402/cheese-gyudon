@@ -11,12 +11,31 @@
 </head>
 
 <body>
-    <div class="main-content">
-        
+    class:<select name="input-class" id="input-class"></select>
+    date:<input type="date" id="input-date">
+    <div id="new-table">
+
     </div>
 
 
+    <script src="https://www.gstatic.com/firebasejs/8.7.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.7.0/firebase-database.js"></script>
+    <script>
+        // Your web app's Firebase configuration
+        var firebaseConfig = {
+            apiKey: "AIzaSyDIo54y1gk4Mx0F7pVFPUuNgl5yObrxhxg",
+            authDomain: "cheese-ushi.firebaseapp.com",
+            databaseURL: "https://cheese-ushi-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "cheese-ushi",
+            storageBucket: "cheese-ushi.appspot.com",
+            messagingSenderId: "529789470857",
+            appId: "1:529789470857:web:a229452cc1997ef9d8de58"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+    </script>
     <script src="./main.js"></script>
+
 </body>
 
 </html>

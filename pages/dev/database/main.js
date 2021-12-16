@@ -16,6 +16,8 @@ async function addAttend(studentID, date, time, status, remarks = ''){
         return
     }
 
+    date = paseDate(new Date(date), 'YYYY-MM-DD')
+
     const studentData = await database.ref(`student/${studentID}`).get();
     const parseStudnetData = await studentData.val();
 
