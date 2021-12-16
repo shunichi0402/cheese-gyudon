@@ -3,3 +3,88 @@
     left: 50%;
     transform: translateX(-50%);
 }
+
+html,body{
+    margin: 0;
+    padding: 0;
+    background-color: #16161a;
+    width: 100%;
+    height: 100%;
+    font-weight: bold;
+}
+
+header{
+    background-color: rgb(48, 48, 61);
+    height: 100px;
+    width: 100%;
+}
+
+.title{
+    margin: 0 30px;
+    line-height: 100px;
+}
+
+.title>span{
+    margin: 0 -5px;
+}
+
+.color-1{
+    color: #c2c2c2;
+}
+.color-2{
+    color: #dfeb89;
+}
+
+main{
+    height: calc(100% - 200px);
+    width: 100%;
+}
+
+.grid-conteiner{
+    display: grid;
+    width: 100%;
+    height: 100%;
+    grid-template-rows: 1fr 200px 1fr;
+    grid-template-columns: 3fr 300px 1fr 300px 3fr;
+        grid-template-areas:
+        ". . . . ."
+        ". message . login ."
+        ". . . . .";
+}
+
+.content-title{
+    grid-area: message;
+    text-shadow: 7px 7px 0 black;
+}
+
+.content-login{
+    grid-area: login;
+    position: relative;
+}
+
+.login-button{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    text-align: center;
+    line-height: 60px;
+    height: 60px;
+    width: 200px;
+    border-radius: 5px;
+    background-color: #dfeb89;
+    color: #333;
+    font-size: 30px;
+    cursor: pointer;
+    box-shadow: 3px 3px 12px rgb(209, 209, 209);
+}
+
+.login-button:hover{
+    box-shadow: 3px 3px 7px rgb(209, 209, 209);
+}
+
+footer{
+    height: 100px;
+    width: 100%;
+    background-color: #101010;
+}
