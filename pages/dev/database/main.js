@@ -10,13 +10,16 @@ function paseDate(date, format){
 }
 
 async function addAttend(studentID, date, time, status, remarks = ''){
+
+    console.log(date);
     if (!studentID || !date || !time || !status) {
         return
     }
 
-    const studentData = await database.ref(`studnet/${studentID}`).get();
+    const studentData = await database.ref(`student/${studentID}`).get();
     const parseStudnetData = await studentData.val();
 
+    console.log(studentID);
     if (parseStudnetData == null){
         console.log('err : studentIDが不正な値です。');
         return
@@ -132,24 +135,7 @@ async function relocadStudent(studnetClass){
 
     }
 
-    document.getElementById('attent-student').innerHTML = innerHTML;
-
-
-    // database.ref(`class/${studnetClass}`).get().then(data => {
-    //     parsedData = data.val();
-    
-    //     let innerHTML = '';
-    //     if (parsedData){
-    //         for (const [key, value] of Object.entries(parsedData)) {
-
-    //             database.ref(`studnet/${key}`).get().then(studnetData => {
-    //                 innerHTML += `<option value="${key}">${studnetData.val().name}</option>`;
-    //             })
-    //         }
-    //     }
-
-    // });
-
+    document.getElementById('attend-student').innerHTML = innerHTML;
 
 }
 
