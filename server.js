@@ -9,6 +9,6 @@ app.use((req, res, next) => {
     res.sendFile(__dirname + '/pages/notfound/index.html');
 });
 
-app.listen(3000, () => {
+app.listen(4000, () => {
     consola.log('Example app listening on port 3000!', consola.color.green);
 });

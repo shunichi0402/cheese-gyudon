@@ -1,0 +1,13 @@
+.main-content{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translateX(-50%) translateY(-50%);
+}
+.main-table{
+    display: flex;
+}
+.main-table>div{
+    width: 150px;
+    border: 1px solid black;
+}

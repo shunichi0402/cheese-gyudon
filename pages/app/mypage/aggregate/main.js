@@ -9,80 +9,78 @@ function paseDate(date, format) {
     return format;
 }
 
-async function getAttend(classID, date){
-    if(!classID){
+async function getAttend(startDate, endDate, classID){
+
+    // console.log(classID);
+    if (!classID) {
         return;
     }
 
     const classData = await database.ref(`class/${classID}`).get();
     const parsedClassData = await classData.val();
 
-    if (!parsedClassData){
+    if (!parsedClassData) {
         console.log('err : clasIDが不正な値です。');
         return;
     }
 
-    if (Number.isNaN(date.getTime()) && date){
-        date = new Date();
+    const students = parsedClassData.student;
+
+    console.log('start');
+    console.log(startDate);
+    console.log('end');
+    console.log(endDate);
+    if(!startDate){
+        startDate = new Date('1971-01-01');
+    }
+    if (!endDate) {
+        endDate = new Date('2030-01-01');
     }
 
-    if(!date){
-        date = paseDate(new Date(), 'YYYY-MM-DD');
-    } else {
-        date = paseDate(date, 'YYYY-MM-DD');
-    }
+    const attendData = await database.ref(`attend`).get();
+    const parsedAttendData = await attendData.val();
 
+    // console.log(parsedAttendData);
 
-    const classStudentData = await database.ref(`class/${classID}/student`).get();
-    const parsedClassStudentData = await classStudentData.val();
+    data = [];
 
-    const tableData = []
-    if (parsedClassStudentData) {
-        for (const [key, value] of Object.entries(parsedClassStudentData)) {
-            const tmpData = []
-            
-            const attendData = await database.ref(`attend/${key}/${date}`).get();
-            const parsedAttendData = await attendData.val();
+    for (const [key, value] of Object.entries(parsedAttendData)) {
 
-            const studnetData = await database.ref(`student/${key}`).get();
-            const parsedStudentData = await studnetData.val();
+        const counter = (new Array(6)).fill(0);
 
-            console.log(parsedAttendData);
-
-            if (parsedAttendData){
-                for(let i = 0; i < 9; i++){
-                    if (parsedAttendData[i]){
-                        tmpData.push(parsedAttendData[i]);
-                    }else{
-                        tmpData.push({
-                            remarks:'',
-                            status : -1
-                        });
-                    }
+        for (const [dkey, dvalue] of Object.entries(value)){
+            const date = new Date(dkey);
+            if (startDate.getTime() < date.getTime() && endDate.getTime() > date.getTime()){
+                // console.log(dvalue);
+                if(dvalue){
+                    dvalue.forEach(item => {
+                        counter[parseInt(item.status)]++;
+                    })
                 }
-            } else {
-                for (let i = 0; i < 9; i++) {
-                    tmpData.push({
-                        remarks: '',
-                        status: -1
-                    });
-                }
+
             }
-
-            tableData.push({ student: `${parsedStudentData.number} : ${parsedStudentData.name}`, data: tmpData});
         }
+
+        if (students[key]){
+            const namedata = await database.ref(`student/${key}`).get();
+            const parsedNamedata = await namedata.val();
+
+            data.push({
+                student: parsedNamedata,
+                data: counter
+            });
+            console.log(parsedNamedata)
+            console.log(key);
+            console.log(counter);
+        }
+
     }
 
-    console.log(tableData);
-
-    dislpayTable(tableData);
-    // const attendData = await database.ref(`attend/${studentID}/${date}`).get();
-
-    // console.log(attendData);
+    dislpayTable(data);
 }
 
 
-function dislpayTable(tableData){
+function dislpayTable(data){
 
     const newTable = document.getElementById('new-table');
     newTable.innerHTML = `
@@ -90,51 +88,31 @@ function dislpayTable(tableData){
         <div>
         出席番号 : 名前
         </div>
-        <div>ホームルーム</div>
-        <div>1限目</div>
-        <div>2限目</div>
-        <div>3限目</div>
-        <div>4限目</div>
-        <div>5限目</div>
-        <div>6限目</div>
-        <div>7限目</div>
-        <div>8限目</div>
+        <div>出席</div>
+        <div>欠席</div>
+        <div>忌引き</div>
+        <div>早退</div>
+        <div>遅刻</div>
+        <div>公欠</div>
     </div>
     `;
 
-    tableData.forEach(item => {
-        let tmpStr = '';
-        item.data.forEach(iitem => {
-            if (iitem.status == -1){
-                tmpStr += `<div>-</div>`;
-            }
-            if (iitem.status == 0){
-                tmpStr += `<div>出席</div>`;
-            }
-            if (iitem.status == 1){
-                tmpStr += `<div>欠席</div>`;
-            }
-            if (iitem.status == 2){
-                tmpStr += `<div>忌引き</div>`;
-            }
-            if (iitem.status == 3){
-                tmpStr += `<div>早退</div>`;
-            }
-            if (iitem.status == 4){
-                tmpStr += `<div>遅刻</div>`;
-            }
-            if (iitem.status == 5){
-                tmpStr += `<div>公欠</div>`;
-            }
-        })
+    
+    data.forEach(item => {
         let tmpHTML = `
             <div class="main-table">
-                <div>${item.student}</div>
-                ${tmpStr}
+                <div>${item.student.number} : ${item.student.name}</div>
+                <div>${item.data[0]}</div>
+                <div>${item.data[1]}</div>
+                <div>${item.data[2]}</div>
+                <div>${item.data[3]}</div>
+                <div>${item.data[4]}</div>
+                <div>${item.data[5]}</div>
             </div>
         `;
         newTable.innerHTML += tmpHTML
-    });
+    })
+
     document.body.appendChild(newTable);
 }
 
@@ -152,19 +130,23 @@ function relocadClass() {
     });
 }
 
-document.getElementById('input-class').addEventListener('change', () => {
-    getAttend(document.getElementById('input-class').value, new Date((document.getElementById('input-date').value)));
-});
-document.getElementById('input-date').addEventListener('change', () => {
-    getAttend(document.getElementById('input-class').value, new Date((document.getElementById('input-date').value)));
+// document.getElementById('end-date').addEventListener('change', () => {
+//     getAttend(new Date((document.getElementById('start-date').value)), new Date((document.getElementById('end-date').value)), document.getElementById('input-class').value);
+// });
+document.getElementById('submit').addEventListener('click', () => {
+    getAttend(new Date((document.getElementById('start-date').value)), new Date((document.getElementById('end-date').value)), document.getElementById('input-class').value);
 });
 
 
 relocadClass();
-setTimeout(() => {
-    getAttend(document.getElementById('input-class').value, new Date((document.getElementById('input-date').value)));
-}, 1000);
+// setTimeout(() => {
+//     getAttend(document.getElementById('input-class').value, new Date((document.getElementById('input-date').value)));
+// }, 1000);
 
-console.log(document.getElementById('input-date').value);
+// console.log(document.getElementById('input-date').value);
 
-// getAttend('-Mr3bvsam37BxPMSSLCR');
+getAttend();
+
+
+
+

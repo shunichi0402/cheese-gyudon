@@ -12,13 +12,100 @@
 
 <body>
     <div class="main-content">
-        <img src="/img/title.png" 　title="タイトル">
-        <p>出席簿入力</p>
-        <a href="/index.html"><img src="/img/toppage.png" alt="トップページへ"></a>
+        <h1>Input Page</h1>
+
+        <h3>Class</h3>
+        <div>
+            name:<input type="text" id="class-name">
+        </div>
+        <button id="add-class-button">submit</button>
+
         
+        <h3>Students</h3>
+        <div>
+            name:<input type="text" id="student-name">
+            number:<input type="number" value="1" min="1" id="student-number">
+            class:<select name="student-class" id="student-class"></select>
+        </div>
+        <button id="add-student-button">submit</button>
+
+        <h3>Attend</h3>
+        <div>
+            class:<select name="attend-class" id="attend-class"></select>
+            student:<select name="attend-student" id="attend-student"></select>
+            date:<input type="date" name="sttend-date" id="attend-date">
+            time: <select name="attend-time" id="attend-time">
+                <option value="0">HL</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+            </select>
+            <br>
+            status: <select name="attend-status" id="attend-status">
+                <option value="0">出席</option>
+                <option value="1">欠席</option>
+                <option value="2">忌引き</option>
+                <option value="3">早退</option>
+                <option value="4">遅刻</option>
+                <option value="5">公欠</option>
+            </select>
+            remarks: <input type="text" id="attend-remarks">
+        </div>
+        <button id="add-attend-button">submit</button>
+
+        <h3>Attend-All</h3>
+        <div>
+            class:<select name="attend-class" id="attend-all-class"></select>
+            date:<input type="date" name="sttend-date" id="attend-all-date">
+            time: <select name="attend-time" id="attend-all-time">
+                <option value="0">HL</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+            </select>
+            <br>
+            status: <select name="attend-all-status" id="attend-all-status">
+                <option value="0">出席</option>
+                <option value="1">欠席</option>
+                <option value="2">忌引き</option>
+                <option value="3">早退</option>
+                <option value="4">遅刻</option>
+                <option value="5">公欠</option>
+            </select>
+            remarks: <input type="text" id="attend-all-remarks">
+        </div>
+        <button id="add-attend-all-button">submit</button>
+
     </div>
-
-
+    
+    
+    <script src="https://www.gstatic.com/firebasejs/8.7.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.7.0/firebase-database.js"></script>
+    <script>
+        // Your web app's Firebase configuration
+        var firebaseConfig = {
+            apiKey: "AIzaSyDIo54y1gk4Mx0F7pVFPUuNgl5yObrxhxg",
+            authDomain: "cheese-ushi.firebaseapp.com",
+            databaseURL: "https://cheese-ushi-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "cheese-ushi",
+            storageBucket: "cheese-ushi.appspot.com",
+            messagingSenderId: "529789470857",
+            appId: "1:529789470857:web:a229452cc1997ef9d8de58"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+    </script>
+    
     <script src="./main.js"></script>
 </body>
 
